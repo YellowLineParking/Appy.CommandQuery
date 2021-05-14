@@ -139,6 +139,7 @@ public class SomeClient
 
 Commands work in the same way as queries, except that they don't have a return type:
 
+```
 public class UpdateUserName : IQuery<IDbConnection, User>
 {
   public string UserId {get; }
@@ -149,7 +150,6 @@ public class UpdateUserName : IQuery<IDbConnection, User>
     UserId = userId;
     Name = name;
   }
-    
 
   public async Task Execute(IDbConnection connection)
   {
@@ -166,6 +166,7 @@ public class UpdateUserName : IQuery<IDbConnection, User>
     }
   }
 }
+```
 
 ```
 public class SomeClient
@@ -186,15 +187,14 @@ NOTE: there's also an `ICommand` interface available which does have a return ty
 
 ## Testing
 
-Rather than having to mock a myriad of interfaces to swap out all external dependencies you can mock just the `IDataSource` and verify that the correct queryies have been executed.
+Rather than having to mock a myriad of interfaces to swap out all external dependencies you can mock just the `IDataSource` and verify that the correct queries have been executed.
 
-Example using Moq, verifying whether all queries where correctly executed:
+Example using Moq, verifying whether all queries were correctly executed:
 
 ``` 
 var dataSourceMock = new Mock<IDataSource>();
 
 dataSourceMock.Verify(dataSource => dataSource.Execute(It.IsAny<UpdateUsername>()));
-
 dataSourceMock.Verify(dataSource => dataSource.Get(It.Is<UserById>(q => q.UserId == "123")));
 dataSourceMock.Verify(dataSource => dataSource.Execute(It.IsAny<ProductFromApi>()));
 dataSourceMock.Verify(dataSource => dataSource.Execute(It.IsAny<BlobFromAzure>()));
