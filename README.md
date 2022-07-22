@@ -1,16 +1,35 @@
-<a href="https://ci.appveyor.com/project/yellowlineparking/appy-commandquery">
-  <img src="https://ci.appveyor.com/api/projects/status/github/YellowLineParking/Appy.CommandQuery?branch=master&svg=true" width="200" />
-</a>
-
 # Appy.CommandQuery
+
+![AppyWay logo](resources/appyway-100x100.png)
+
+## What is Appy.CommandQuery?
 
 Appy.CommandQuery is a package that allows you to separate data sources from the calling code by using messages as a mode of transport, rather than direct method calls.
 
-## Getting Started
+## Packages
 
-`Install-Package Appy.CommandQuery`
+| Package | Latest Stable |
+| --- | --- |
+| [Appy.CommandQuery](https://www.nuget.org/packages/Appy.CommandQuery) | [![Nuget Package](https://img.shields.io/badge/nuget-2.1.0-blue.svg)](https://www.nuget.org/packages/Appy.CommandQuery) |
 
-### Creating a query
+
+## Table of Contents
+
+- [Installing](#installing)
+- [Usage](#usage)
+
+### Installing
+
+Install using the [Appy.CommandQuery NuGet package](https://www.nuget.org/packages/Appy.CommandQuery):
+
+```
+PM> Install-Package Appy.CommandQuery
+```
+
+### Usage
+
+
+#### Creating a query
 
 ```
 public class UserById : IQuery<IDbConnection, User>
@@ -44,14 +63,14 @@ public class UserById : IQuery<IDbConnection, User>
 }
 ```
 
-### Executing a query
+#### Executing a query
 ```
   var dataSource = new DataSource(() => new SqlConnection("connectionstring"));
 
   var user = await dataSource.Get(new UserById(myUserId));
 ```
 
-## Decoupling datasource
+### Decoupling datasource
 
 In the above example, you're still required to instantiate the datasource and ensure you provide the correct callback in the constructor of the data source.
 The goal is to inject the data source, so your calling code can be independent.
@@ -135,7 +154,7 @@ public class SomeClient
 }
 ```
 
-## Commands
+### Commands
 
 Commands work in the same way as queries, except that they don't have a return type:
 
@@ -185,7 +204,7 @@ public class SomeClient
 
 NOTE: there's also an `ICommand` interface available which does have a return type. It is functionally equivalent to the `IQuery` interface, but changes the semantics. This can be used in cases where you want to return the result of executing a command (eg: Inserting a user and returning the ID).
 
-## Testing
+### Testing
 
 Rather than having to mock a myriad of interfaces to swap out all external dependencies you can mock just the `IDataSource` and verify that the correct queries have been executed.
 
@@ -208,15 +227,5 @@ dataSourceMock.Setup(dataSource => dataSource.Execute(It.IsAny<ProductFromApi>()
 ```
 
 
-
-## Building the solution
-
-Execute the following command:
-
-```
-build.bat dev
-```
-
-This will execute the tasks `clean`, `compile`, `test`, `pack`
-You can execute any of these tasks separately by running `build <task>`
-
+## Contribute
+It would be awesome if you would like to contribute code or help with bugs. Just follow the guidelines [CONTRIBUTING](https://github.com/YellowLineParking/Appy.CommandQuery/blob/master/CONTRIBUTING.md)
