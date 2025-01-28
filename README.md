@@ -15,8 +15,12 @@ Appy.CommandQuery is a package that allows you to separate data sources from the
 
 ## Table of Contents
 
+- [Testing](#testing)
 - [Installing](#installing)
 - [Usage](#usage)
+
+### Testing
+This project is tested with BrowserStack
 
 ### Installing
 
